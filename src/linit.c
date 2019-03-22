@@ -33,7 +33,7 @@
 
 #include "lualib.h"
 #include "lauxlib.h"
-
+#include "lua400.h"
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua

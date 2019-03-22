@@ -1,3 +1,7 @@
+#include "lprefix.h"
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 #include <xxfdbk.h>
 #include <recio.h>
 
