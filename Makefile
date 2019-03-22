@@ -1,114 +1,46 @@
-# Makefile for installing Lua
-# See doc/readme.html for installation and customization instructions.
 
-# == CHANGE THE SETTINGS BELOW TO SUIT YOUR ENVIRONMENT =======================
+BASE_DIR=/home/YVANJ/lua400
 
-# Your platform. See PLATS for possible values.
-PLAT= none
+all: ilelua
 
-# Where to install. The installation starts in the src and doc directories,
-# so take care if INSTALL_TOP is not an absolute path. See the local target.
-# You may want to make INSTALL_LMOD and INSTALL_CMOD consistent with
-# LUA_ROOT, LUA_LDIR, and LUA_CDIR in luaconf.h.
-INSTALL_TOP= /usr/local
-INSTALL_BIN= $(INSTALL_TOP)/bin
-INSTALL_INC= $(INSTALL_TOP)/include
-INSTALL_LIB= $(INSTALL_TOP)/lib
-INSTALL_MAN= $(INSTALL_TOP)/man/man1
-INSTALL_LMOD= $(INSTALL_TOP)/share/lua/$V
-INSTALL_CMOD= $(INSTALL_TOP)/lib/lua/$V
+library:
+	system "crtlib lua"
+	system "crtsrcpf file(lua/luasrc) rcdlen(240)"
 
-# How to install. If your install program does not support "-p", then
-# you may have to run ranlib on the installed liblua.a.
-INSTALL= install -p
-INSTALL_EXEC= $(INSTALL) -m 0755
-INSTALL_DATA= $(INSTALL) -m 0644
-#
-# If you don't have "install" you can use "cp" instead.
-# INSTALL= cp -p
-# INSTALL_EXEC= $(INSTALL)
-# INSTALL_DATA= $(INSTALL)
-
-# Other utilities.
-MKDIR= mkdir -p
-RM= rm -f
-
-# == END OF USER SETTINGS -- NO NEED TO CHANGE ANYTHING BELOW THIS LINE =======
-
-# Convenience platforms targets.
-PLATS= aix bsd c89 freebsd generic linux macosx mingw posix solaris
-
-# What to install.
-TO_BIN= lua luac
-TO_INC= lua.h luaconf.h lualib.h lauxlib.h lua.hpp
-TO_LIB= liblua.a
-TO_MAN= lua.1 luac.1
-
-# Lua version and release.
-V= 5.3
-R= $V.4
-
-# Targets start here.
-all:	$(PLAT)
-
-$(PLATS) clean:
-	cd src && $(MAKE) $@
-
-test:	dummy
-	src/lua -v
-
-install: dummy
-	cd src && $(MKDIR) $(INSTALL_BIN) $(INSTALL_INC) $(INSTALL_LIB) $(INSTALL_MAN) $(INSTALL_LMOD) $(INSTALL_CMOD)
-	cd src && $(INSTALL_EXEC) $(TO_BIN) $(INSTALL_BIN)
-	cd src && $(INSTALL_DATA) $(TO_INC) $(INSTALL_INC)
-	cd src && $(INSTALL_DATA) $(TO_LIB) $(INSTALL_LIB)
-	cd doc && $(INSTALL_DATA) $(TO_MAN) $(INSTALL_MAN)
-
-uninstall:
-	cd src && cd $(INSTALL_BIN) && $(RM) $(TO_BIN)
-	cd src && cd $(INSTALL_INC) && $(RM) $(TO_INC)
-	cd src && cd $(INSTALL_LIB) && $(RM) $(TO_LIB)
-	cd doc && cd $(INSTALL_MAN) && $(RM) $(TO_MAN)
-
-local:
-	$(MAKE) install INSTALL_TOP=../install
-
-none:
-	@echo "Please do 'make PLATFORM' where PLATFORM is one of these:"
-	@echo "   $(PLATS)"
-	@echo "See doc/readme.html for complete instructions."
-
-# make may get confused with test/ and install/
-dummy:
-
-# echo config parameters
-echo:
-	@cd src && $(MAKE) -s echo
-	@echo "PLAT= $(PLAT)"
-	@echo "V= $V"
-	@echo "R= $R"
-	@echo "TO_BIN= $(TO_BIN)"
-	@echo "TO_INC= $(TO_INC)"
-	@echo "TO_LIB= $(TO_LIB)"
-	@echo "TO_MAN= $(TO_MAN)"
-	@echo "INSTALL_TOP= $(INSTALL_TOP)"
-	@echo "INSTALL_BIN= $(INSTALL_BIN)"
-	@echo "INSTALL_INC= $(INSTALL_INC)"
-	@echo "INSTALL_LIB= $(INSTALL_LIB)"
-	@echo "INSTALL_MAN= $(INSTALL_MAN)"
-	@echo "INSTALL_LMOD= $(INSTALL_LMOD)"
-	@echo "INSTALL_CMOD= $(INSTALL_CMOD)"
-	@echo "INSTALL_EXEC= $(INSTALL_EXEC)"
-	@echo "INSTALL_DATA= $(INSTALL_DATA)"
-
-# echo pkg-config data
-pc:
-	@echo "version=$R"
-	@echo "prefix=$(INSTALL_TOP)"
-	@echo "libdir=$(INSTALL_LIB)"
-	@echo "includedir=$(INSTALL_INC)"
-
-# list targets that do not create files (but not all makes understand .PHONY)
-.PHONY: all $(PLATS) clean test install local none dummy echo pecho lecho
-
-# (end of Makefile)
+ilelua:
+	system "crtcmod module(lua/lapi) srcstmf('${BASE_DIR}/src/lapi.c')"
+	system "crtcmod module(lua/lauxlib) srcstmf('${BASE_DIR}/src/lauxlib.c')"
+	system "crtcmod module(lua/lbaselib) srcstmf('${BASE_DIR}/src/lbaselib.c')"
+	system "crtcmod module(lua/lbitlib) srcstmf('${BASE_DIR}/src/lbitlib.c')"
+	system "crtcmod module(lua/lcode) srcstmf('${BASE_DIR}/src/lcode.c')"
+	system "crtcmod module(lua/lcorolib) srcstmf('${BASE_DIR}/src/lcorolib.c')"
+	system "crtcmod module(lua/lctype) srcstmf('${BASE_DIR}/src/lctype.c')"
+	system "crtcmod module(lua/ldblib) srcstmf('${BASE_DIR}/src/ldblib.c')"
+	system "crtcmod module(lua/ldebug) srcstmf('${BASE_DIR}/src/ldebug.c')"
+	system "crtcmod module(lua/ldo) srcstmf('${BASE_DIR}/src/ldo.c')"
+	system "crtcmod module(lua/ldump) srcstmf('${BASE_DIR}/src/ldump.c')"
+	system "crtcmod module(lua/lfunc) srcstmf('${BASE_DIR}/src/lfunc.c')"
+	system "crtcmod module(lua/lgc) srcstmf('${BASE_DIR}/src/lgc.c')"
+	system "crtcmod module(lua/linit) srcstmf('${BASE_DIR}/src/linit.c')"
+	system "crtcmod module(lua/liolib) srcstmf('${BASE_DIR}/src/liolib.c')"
+	system "crtcmod module(lua/llex) srcstmf('${BASE_DIR}/src/llex.c')"
+	system "crtcmod module(lua/lmathlib) srcstmf('${BASE_DIR}/src/lmathlib.c')"
+	system "crtcmod module(lua/lmem) srcstmf('${BASE_DIR}/src/lmem.c')"
+	system "crtcmod module(lua/lmidrange) srcstmf('${BASE_DIR}/src/lmidrangelib.c')"
+	system "crtcmod module(lua/loadlib) srcstmf('${BASE_DIR}/src/loadlib.c')"
+	system "crtcmod module(lua/lobject) srcstmf('${BASE_DIR}/src/lobject.c')"
+	system "crtcmod module(lua/lopcodes) srcstmf('${BASE_DIR}/src/lopcodes.c')"
+	system "crtcmod module(lua/loslib) srcstmf('${BASE_DIR}/src/loslib.c')"
+	system "crtcmod module(lua/lparser) srcstmf('${BASE_DIR}/src/lparser.c')"
+	system "crtcmod module(lua/lstate) srcstmf('${BASE_DIR}/src/lstate.c')"
+	system "crtcmod module(lua/lstring) srcstmf('${BASE_DIR}/src/lstring.c')"
+	system "crtcmod module(lua/lstrlib) srcstmf('${BASE_DIR}/src/lstrlib.c')"
+	system "crtcmod module(lua/ltable) srcstmf('${BASE_DIR}/src/ltable.c')"
+	system "crtcmod module(lua/ltablib) srcstmf('${BASE_DIR}/src/ltablib.c')"
+	system "crtcmod module(lua/ltm) srcstmf('${BASE_DIR}/src/ltm.c')"
+	system "crtcmod module(lua/luam) srcstmf('${BASE_DIR}/src/lua.c')"
+	system "crtcmod module(lua/lundump) srcstmf('${BASE_DIR}/src/lundump.c')"
+	system "crtcmod module(lua/lutf8lib) srcstmf('${BASE_DIR}/src/lutf8lib.c')"
+	system "crtcmod module(lua/lvm) srcstmf('${BASE_DIR}/src/lvm.c')"
+	system "crtcmod module(lua/lzio) srcstmf('${BASE_DIR}/src/lzio.c')"
+	system "crtpgm pgm(lua/lua) module(lua/lapi lua/lauxlib lua/lbaselib lua/lbitlib lua/lcode lua/lcorolib lua/lctype lua/ldblib lua/ldebug lua/ldo lua/ldump lua/lfunc lua/lgc lua/linit lua/liolib lua/llex lua/lmathlib lua/lmem lua/lmidrange lua/loadlib lua/lobject lua/lopcodes lua/loslib lua/lparser lua/lstate lua/lstring lua/lstrlib lua/ltable lua/ltablib lua/ltm lua/luam lua/lundump lua/lutf8lib lua/lvm lua/lzio)"
