@@ -5,7 +5,6 @@ all: ilelua
 
 library:
 	system "crtlib lua"
-	system "crtsrcpf file(lua/luasrc) rcdlen(240)"
 
 ilelua:
 	system "crtcmod module(lua/lapi) srcstmf('${BASE_DIR}/src/lapi.c')"
