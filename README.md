@@ -2,24 +2,28 @@
 
 Port of Lua for the IBM i platform in the ILE subsystem.
 
+![ILE Lua screenshot](https://raw.githubusercontent.com/friedkiwi/lua400/master/img/ile_lua.png)
+
+
 ## Installation
 
-TODO: document installation and create release artefacts
+No binary releases are available yet, see *Compilation* below.
 
 ## Compilation
 
-Prepare the source code with `./prepare.sh`, and upload the resulting ilelua.c file to your IBM i or OS/400 machine. Compile the output with the ILE C compiler.
+1. Upload the source tree to your IBM i machine using e.g. SFTP
+2. Edit the Makefile to contain the path for the source
+3. Issue `make library` to create the LUA library to store the objects and *PGM
+4. Issue `make` to build LUA/LUA
+5. ???
+6. PROFIT!
 
-TODO: elaborate more
 
 ## `midrange` namespace
 
 This version of Lua includes a `midrange` namespace with OS/400 specific functionality. 
 
-TODO: add more useful bits to the midrange namespace
-
-TODO: properly document it.
-
+This is a work-in-progress to allow easier interaction with ILE and IBM i
 
 ## Sample code
 
